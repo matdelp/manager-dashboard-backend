@@ -6,7 +6,7 @@ import { CreateChallengeDto } from './dto/createChallenge.dto';
 import { UpdateChallengeDto } from './dto/updateChallenge.dto';
 
 @Injectable()
-export class ChallengesService {
+export class ChallengeService {
   constructor(
     @InjectModel(Challenge.name)
     private challengeModel: Model<ChallengeDocument>,
