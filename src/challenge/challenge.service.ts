@@ -1,13 +1,23 @@
-import { Injectable } from '@nestjs/common';
-// import { Dog } from './interfaces/dogs.interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Challenge } from './types/Challenge';
 
 @Injectable()
 export class ChallengesService {
-  private readonly Challenges: Challenge[] = [];
+  private readonly challenges: Challenge[] = [];
+
   create(challenge: Challenge) {
-    this.Challenges.push(challenge);
+    this.challenges.push(challenge);
   }
+
   findAll(): Challenge[] {
-    return this.Challenges;
+    return this.challenges;
+  }
+
+  findOne(id: string): Challenge {
+    const challenge = this.challenges.find((ch) => ch.id === id);
+    if (!challenge) {
+      throw new NotFoundException(`Challenge not found`);
+    }
+    return challenge;
   }
 }

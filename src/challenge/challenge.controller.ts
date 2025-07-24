@@ -4,38 +4,48 @@ import {
   Delete,
   Get,
   Param,
+  Post,
   Put,
   Query,
 } from '@nestjs/common';
-// import { CreateChallengeDto } from './create-challenges.dto';
-// import { UpdateChallengeDto } from './update-challenges.dto';
+
+import { CreateChallengeDto } from './dto/createChallenge.dto';
+import { UpdateChallengeDto } from './dto/updateChallenge.dto';
+import { ChallengesService } from './challenge.service';
+import { Challenge } from './types/Challenge';
 
 @Controller('challenge')
 export class ChallengeController {
+  constructor(private readonly challengesService: ChallengesService) {}
+
   @Get()
-  findAll(): string {
-    return `This action returns all the challenges`;
+  findAll() {
+    return this.challengesService.findAll();
   }
+
   @Get(':id')
-  findOne(@Param('id') id: number, @Query('name') name: string): string {
-    return `This action returns "${name}" challenge`;
+  findOne(@Param('id') id: string): Challenge {
+    return this.challengesService.findOne(id);
   }
+
+  //Keepgoing
+  @Post()
+  createChallenge(@Body() createDto: CreateChallengeDto): string {
+    return 'This action adds a new challenge';
+  }
+
   @Put(':id')
   updateChallenge(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateDto: UpdateChallengeDto,
-    @Query('name') name: string,
   ): string {
-    return `This action update "${name}" challenge`;
+    return `This action update the challenge`;
   }
   @Delete(':id')
   deleteChallengeByName(
     @Param('id') id: number,
     @Query('name') name: string,
   ): string {
-    return `This action delete "${name}" challenge`;
+    return `This action delete the challenge`;
   }
 }
-//   @Post()
-//   createChallenge(@Body() createDto: CreateChallengeDto): string {
-//     return 'This action adds new challenges';}
