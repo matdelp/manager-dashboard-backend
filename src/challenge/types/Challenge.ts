@@ -3,12 +3,15 @@ import { Code } from './Code';
 import { Submission } from './Submission';
 
 export type Challenge = {
-  id: string;
   title: string;
   category: string;
-  description: number;
+  description: string;
   level: 'Easy' | 'Moderate' | 'Hard';
   code: Code;
   test: Test[];
   submission: Submission[];
+};
+
+export type ChallengeFromDb = Challenge & {
+  id: string;
 };

@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
 
 import { CreateChallengeDto } from './dto/createChallenge.dto';
@@ -24,28 +23,26 @@ export class ChallengeController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Challenge {
-    return this.challengesService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<Challenge> {
+    return await this.challengesService.findOne(id);
   }
 
-  //Keepgoing
   @Post()
-  createChallenge(@Body() createDto: CreateChallengeDto): string {
-    return 'This action adds a new challenge';
+  async createChallenge(
+    @Body() createDto: CreateChallengeDto,
+  ): Promise<Challenge> {
+    return await this.challengesService.create(createDto);
   }
 
   @Put(':id')
-  updateChallenge(
+  async updateChallenge(
     @Param('id') id: string,
     @Body() updateDto: UpdateChallengeDto,
-  ): string {
-    return `This action update the challenge`;
+  ): Promise<Challenge> {
+    return await this.challengesService.update(id, updateDto);
   }
   @Delete(':id')
-  deleteChallengeByName(
-    @Param('id') id: number,
-    @Query('name') name: string,
-  ): string {
-    return `This action delete the challenge`;
+  async deleteChallenge(@Param('id') id: string): Promise<void> {
+    return await this.challengesService.delete(id);
   }
 }

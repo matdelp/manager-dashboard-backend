@@ -18,7 +18,7 @@ export class Challenge {
   description: string;
 
   @Prop({ required: true })
-  level: ['Easy', 'Moderate', 'Hard'];
+  level: 'Easy' | 'Moderate' | 'Hard';
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Code' })
   code: Code;
