@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-export type CoderDocument = HydratedDocument<Coder>;
+export type ManagerDocument = HydratedDocument<Manager>;
 
 @Schema()
-export class Coder {
+export class Manager {
   @Prop({ required: true })
   firstName: string;
   @Prop({ required: true })
@@ -15,18 +15,14 @@ export class Coder {
   password: string;
   @Prop({ required: false })
   avatar: string;
-  @Prop({ required: false })
-  description: string;
-  @Prop({ required: true })
-  score: string;
   @Prop({ required: true })
   is_verified: boolean;
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Submission',
+    ref: 'Challenge',
     default: [],
   })
-  submission: mongoose.Schema.Types.ObjectId[];
+  challenges: mongoose.Schema.Types.ObjectId[];
 }
 
-export const CoderSchema = SchemaFactory.createForClass(Coder);
+export const ManagerSchema = SchemaFactory.createForClass(Manager);
