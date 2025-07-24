@@ -6,10 +6,7 @@ import { ChallengeModule } from './challenge/challenge.module';
 import { ChallengeController } from './challenge/challenge.controller';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
-    ChallengeModule,
-  ],
+  imports: [MongooseModule.forRoot(process.env.MONGO_URI!), ChallengeModule],
   controllers: [AppController, ChallengeController],
   providers: [AppService],
 })
