@@ -23,10 +23,10 @@ export class Challenge {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Code' })
   code: Code;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Test' })
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Test' })
   test: Test[];
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Submission' })
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Submission' })
   submission: Submission[];
 }
 

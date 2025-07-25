@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type CodeTextDocument = HydratedDocument<CodeText>;
 
-@Schema({ collection: 'codetext' })
+@Schema({ collection: 'codeText' })
 export class CodeText {
   @Prop({ required: true })
   language: string;

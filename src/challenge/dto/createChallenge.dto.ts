@@ -6,7 +6,6 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { Code, Test } from './extraClasses';
 import { CodeDto } from './nestedDto/code.dto';
 import { TestDto } from './nestedDto/test.dto';
 
@@ -40,5 +39,5 @@ export class CreateChallengeDto {
   @ValidateNested({ each: true })
   @Type(() => TestDto)
   @IsNotEmpty()
-  test: Test[];
+  test: TestDto[];
 }

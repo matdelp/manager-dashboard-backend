@@ -10,12 +10,12 @@ export class Code {
   @Prop({ required: true })
   function_name: string;
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'CodeText',
   })
   code_text: CodeText[];
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'FunctionInputDefinition',
   })
   inputs: FunctionInputDefinition[];

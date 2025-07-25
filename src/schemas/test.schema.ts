@@ -9,7 +9,7 @@ export class Test {
   @Prop({ required: true })
   weight: number;
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'FunctionInputValue',
     required: true,
   })

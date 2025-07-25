@@ -1,6 +1,6 @@
-import { Test } from '../dto/extraClasses';
 import { Code } from './Code';
 import { Submission } from './Submission';
+import { Test } from './Test';
 
 export type Challenge = {
   title: string;
