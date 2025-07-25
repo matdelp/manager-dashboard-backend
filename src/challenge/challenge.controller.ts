@@ -6,13 +6,16 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
+import { RolesGuard } from 'src/common/guards/roles.guard';
 import { ChallengeService } from './challenge.service';
 import { CreateChallengeDto } from './dto/createChallenge.dto';
 import { UpdateChallengeDto } from './dto/updateChallenge.dto';
 import { Challenge } from './types/Challenge';
 
+@UseGuards(RolesGuard)
 @Controller('challenge')
 export class ChallengeController {
   constructor(private readonly ChallengeService: ChallengeService) {}

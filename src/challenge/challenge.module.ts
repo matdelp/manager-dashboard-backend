@@ -15,9 +15,12 @@ import {
   FunctionInputValueSchema,
 } from 'src/schemas/functionInputValue.schema';
 import { Test, TestSchema } from 'src/schemas/test.schema';
+import { JwtModule } from '@nestjs/jwt';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Module({
   imports: [
+    JwtModule,
     MongooseModule.forFeature([
       { name: Manager.name, schema: ManagerSchema },
       { name: Challenge.name, schema: ChallengeSchema },
@@ -32,7 +35,7 @@ import { Test, TestSchema } from 'src/schemas/test.schema';
     ]),
   ],
   controllers: [ChallengeController],
-  providers: [ChallengeService],
+  providers: [ChallengeService, RolesGuard],
   exports: [ChallengeService],
 })
 export class ChallengeModule {}
