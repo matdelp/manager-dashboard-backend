@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 
 export type SubmissionDocument = HydratedDocument<Submission>;
 
@@ -16,12 +16,12 @@ export class Submission {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Challenge',
   })
-  challenge_id: mongoose.Schema.Types.ObjectId;
+  challenge_id: Types.ObjectId;
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Coder',
   })
-  coder_id: mongoose.Schema.Types.ObjectId;
+  coder_id: Types.ObjectId;
 }
 export const SubmissionSchema = SchemaFactory.createForClass(Submission);

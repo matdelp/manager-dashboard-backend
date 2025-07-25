@@ -1,7 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { FunctionInputDefinition } from './functionInputDefinition.schema';
-import { CodeText } from './codeText.schema';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 
 export type CodeDocument = HydratedDocument<Code>;
 
@@ -13,12 +11,12 @@ export class Code {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'CodeText',
   })
-  code_text: CodeText[];
+  code_text: Types.ObjectId[];
   @Prop({
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'FunctionInputDefinition',
   })
-  inputs: FunctionInputDefinition[];
+  inputs: Types.ObjectId[];
 }
 
 export const CodeSchema = SchemaFactory.createForClass(Code);

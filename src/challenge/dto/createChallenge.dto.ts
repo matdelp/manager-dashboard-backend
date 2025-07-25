@@ -9,7 +9,7 @@ import {
 import { CodeDto } from './nestedDto/code.dto';
 import { TestDto } from './nestedDto/test.dto';
 
-enum Levels {
+export enum Levels {
   EASY = 'Easy',
   MODERATE = 'Moderate',
   HARD = 'Hard',

@@ -4,13 +4,13 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 
+import { ChallengeService } from './challenge.service';
 import { CreateChallengeDto } from './dto/createChallenge.dto';
 import { UpdateChallengeDto } from './dto/updateChallenge.dto';
-import { ChallengeService } from './challenge.service';
 import { Challenge } from './types/Challenge';
 
 @Controller('challenge')
@@ -34,7 +34,7 @@ export class ChallengeController {
     return await this.ChallengeService.create(createDto);
   }
 
-  @Put(':id')
+  @Patch(':id')
   async updateChallenge(
     @Param('id') id: string,
     @Body() updateDto: UpdateChallengeDto,

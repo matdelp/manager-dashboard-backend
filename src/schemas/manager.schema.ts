@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { Challenge } from './challenge.schema';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 
 export type ManagerDocument = HydratedDocument<Manager>;
 
@@ -23,7 +22,7 @@ export class Manager {
     ref: 'Challenge',
     default: [],
   })
-  challenges: Challenge[];
+  challenges: Types.ObjectId[];
 }
 
 export const ManagerSchema = SchemaFactory.createForClass(Manager);

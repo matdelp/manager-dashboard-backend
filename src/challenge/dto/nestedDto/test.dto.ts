@@ -3,12 +3,20 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { FunctionInputValueDto } from './functionInputValue.dto';
+import {
+  FunctionInputValueDto,
+  FunctionInputValueUpdateDto,
+} from './functionInputValue.dto';
 
 export class TestDto {
+  @IsString()
+  @IsOptional()
+  _id?: string;
+
   @IsNumber()
   @IsNotEmpty()
   weight: number;
@@ -21,5 +29,25 @@ export class TestDto {
 
   @IsString()
   @IsNotEmpty()
+  outputs: string;
+}
+
+export class TestUpdateDto {
+  @IsString()
+  @IsOptional()
+  _id?: string;
+
+  @IsNumber()
+  @IsOptional()
+  weight: number;
+
+  @IsArray()
+  @ValidateNested()
+  @Type(() => FunctionInputValueUpdateDto)
+  @IsOptional()
+  inputs: FunctionInputValueUpdateDto[];
+
+  @IsString()
+  @IsOptional()
   outputs: string;
 }

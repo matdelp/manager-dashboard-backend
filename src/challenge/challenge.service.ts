@@ -128,11 +128,120 @@ export class ChallengeService {
   }
 
   async update(id: string, dto: UpdateChallengeDto): Promise<Challenge> {
-    const updated = await this.challengeModel
-      .findByIdAndUpdate(id, dto, { new: true })
+    const challenge = await this.challengeModel.findById(id).exec();
+    if (!challenge) throw new NotFoundException('Challenge not found');
+
+    // Top-level fields
+    challenge.title = dto.title ?? challenge.title;
+    challenge.category = dto.category ?? challenge.category;
+    challenge.description = dto.description ?? challenge.description;
+    challenge.level = dto.level ?? challenge.level;
+
+    // Update code if needed
+    if (dto.code) {
+      let codeItem = await this.codeModel.findById(challenge.code).exec();
+      if (!codeItem) {
+        codeItem = new this.codeModel();
+      }
+
+      codeItem.function_name = dto.code.function_name ?? codeItem.function_name;
+
+      // Update or create 'code_text' nested in 'code'
+      if (dto.code.code_text) {
+        const codeTextIds = [];
+        for (const newCodeText of dto.code.code_text) {
+          let updatedItem;
+          if (newCodeText._id) {
+            updatedItem = await this.codeTextModel.findByIdAndUpdate(
+              newCodeText._id,
+              newCodeText,
+              {
+                new: true,
+                upsert: true,
+              },
+            );
+          } else {
+            updatedItem = await this.codeTextModel.create(newCodeText);
+          }
+          codeTextIds.push(updatedItem._id);
+        }
+        codeItem.code_text = codeTextIds;
+      }
+
+      // Same for inputs
+      if (dto.code.inputs) {
+        const inputIds = [];
+        for (const input of dto.code.inputs) {
+          let updatedItem;
+          if (input._id) {
+            updatedItem =
+              await this.functionInputDefinitionModel.findByIdAndUpdate(
+                input._id,
+                input,
+                { new: true, upsert: true },
+              );
+          } else {
+            updatedItem = await this.functionInputDefinitionModel.create(input);
+          }
+          inputIds.push(updatedItem._id);
+        }
+        codeItem.inputs = inputIds;
+      }
+
+      await codeItem.save();
+
+      // Assign updated code document ID to challenge.code if not set
+      if (
+        !challenge.code ||
+        challenge.code.toString() !== codeItem._id.toString()
+      ) {
+        challenge.code = codeItem._id;
+      }
+    }
+
+    // Update or create 'test'
+    if (dto.test) {
+      const testIds = [];
+      for (const test of dto.test) {
+        let testItem;
+        if (test._id) {
+          testItem = await this.testModel.findByIdAndUpdate(test._id, test, {
+            new: true,
+            upsert: true,
+          });
+        } else {
+          const inputValues = await this.functionInputValueModel.create(
+            test.inputs.map((input) => ({
+              name: input.name,
+              value: input.value,
+            })),
+          );
+
+          testItem = await this.testModel.create({
+            weight: test.weight,
+            inputs: inputValues.map((value) => value._id),
+            outputs: test.outputs,
+          });
+        }
+        testIds.push(testItem._id);
+      }
+      challenge.test = testIds;
+    }
+
+    await challenge.save();
+
+    // Return updated challenge with populated nested fields
+    const updatedChallenge = await this.challengeModel
+      .findById(challenge._id)
+      .populate([
+        { path: 'code', populate: [{ path: 'code_text' }, { path: 'inputs' }] },
+        { path: 'test', populate: { path: 'inputs' } },
+      ])
+      .lean<Challenge>()
       .exec();
-    if (!updated) throw new NotFoundException('Challenge not found');
-    return updated;
+    if (!updatedChallenge)
+      throw new NotFoundException('Updated challenge not found');
+    return updatedChallenge;
   }
 
   async delete(id: string): Promise<void> {

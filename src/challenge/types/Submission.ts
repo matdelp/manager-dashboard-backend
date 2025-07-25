@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 export type Submission = {
+  _id?: Types.ObjectId;
   status: string;
   lang: string;
   code: string;

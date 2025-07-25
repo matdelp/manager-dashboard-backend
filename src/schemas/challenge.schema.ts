@@ -1,8 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { Code } from './code.schema';
-import { Test } from './test.schema';
-import { Submission } from './submission.schema';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 
 export type ChallengeDocument = HydratedDocument<Challenge>;
 
@@ -21,13 +18,13 @@ export class Challenge {
   level: 'Easy' | 'Moderate' | 'Hard';
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Code' })
-  code: Code;
+  code: Types.ObjectId;
 
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Test' })
-  test: Test[];
+  test: Types.ObjectId[];
 
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Submission' })
-  submission: Submission[];
+  submission: Types.ObjectId[];
 }
 
 export const ChallengeSchema = SchemaFactory.createForClass(Challenge);

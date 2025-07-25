@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { FunctionInputValue } from './functionInputValue.schema';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 
 export type TestDocument = HydratedDocument<Test>;
 
@@ -13,7 +12,7 @@ export class Test {
     ref: 'FunctionInputValue',
     required: true,
   })
-  inputs: FunctionInputValue[];
+  inputs: Types.ObjectId[];
   @Prop({ required: true })
   outputs: string;
 }
