@@ -3,7 +3,7 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 export type CoderDocument = HydratedDocument<Coder>;
 
-@Schema()
+@Schema({ collection: 'coder' })
 export class Coder {
   @Prop({ required: true })
   firstName: string;

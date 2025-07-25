@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type FunctionInputValueDocument = HydratedDocument<FunctionInputValue>;
 
-@Schema()
+@Schema({ collection: 'functionInputValue' })
 export class FunctionInputValue {
   @Prop({ required: true })
   name: string;

@@ -4,7 +4,7 @@ import { HydratedDocument } from 'mongoose';
 export type FunctionInputDefinitionDocument =
   HydratedDocument<FunctionInputDefinition>;
 
-@Schema()
+@Schema({ collection: 'functionInputDefinition' })
 export class FunctionInputDefinition {
   @Prop({ required: true })
   name: string;

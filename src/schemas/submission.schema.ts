@@ -3,7 +3,7 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 export type SubmissionDocument = HydratedDocument<Submission>;
 
-@Schema()
+@Schema({ collection: 'submission' })
 export class Submission {
   @Prop({ required: true })
   status: string;

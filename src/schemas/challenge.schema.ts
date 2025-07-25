@@ -6,7 +6,7 @@ import { Submission } from './submission.schema';
 
 export type ChallengeDocument = HydratedDocument<Challenge>;
 
-@Schema()
+@Schema({ collection: 'challenge' })
 export class Challenge {
   @Prop({ required: true })
   title: string;

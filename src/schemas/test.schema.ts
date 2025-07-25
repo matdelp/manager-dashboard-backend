@@ -4,7 +4,7 @@ import { FunctionInputValue } from './functionInputValue.schema';
 
 export type TestDocument = HydratedDocument<Test>;
 
-@Schema()
+@Schema({ collection: 'testCase' })
 export class Test {
   @Prop({ required: true })
   weight: number;

@@ -3,7 +3,7 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 export type ManagerDocument = HydratedDocument<Manager>;
 
-@Schema()
+@Schema({ collection: 'manager' })
 export class Manager {
   @Prop({ required: true })
   firstName: string;
