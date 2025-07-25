@@ -7,6 +7,8 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Code, Test } from './extraClasses';
+import { CodeDto } from './nestedDto/code.dto';
+import { TestDto } from './nestedDto/test.dto';
 
 enum Levels {
   EASY = 'Easy',
@@ -30,13 +32,13 @@ export class CreateChallengeDto {
   level: Levels;
 
   @ValidateNested()
-  @Type(() => Code)
+  @Type(() => CodeDto)
   @IsNotEmpty()
-  code: Code;
+  code: CodeDto;
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Test)
+  @Type(() => TestDto)
   @IsNotEmpty()
   test: Test[];
 }

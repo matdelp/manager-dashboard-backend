@@ -1,4 +1,4 @@
-import { Test } from '@nestjs/testing';
+import { Test } from '../dto/extraClasses';
 import { Code } from './Code';
 import { Submission } from './Submission';
 
