@@ -6,12 +6,12 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { Code, Submission, Test } from './extraClasses';
+import { Code, Test } from './extraClasses';
 
 enum Levels {
-  EASY = 'easy',
-  MODERATE = 'moderate',
-  HARD = 'hard',
+  EASY = 'Easy',
+  MODERATE = 'Moderate',
+  HARD = 'Hard',
 }
 export class CreateChallengeDto {
   @IsString()
@@ -39,10 +39,4 @@ export class CreateChallengeDto {
   @Type(() => Test)
   @IsNotEmpty()
   test: Test[];
-
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Submission)
-  @IsNotEmpty()
-  submission: Submission[];
 }

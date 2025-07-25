@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -6,6 +7,15 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
+class CodeText {
+  @IsString()
+  @IsNotEmpty()
+  language: string;
+
+  @IsString()
+  @IsNotEmpty()
+  content: string;
+}
 class FunctionInputDefinition {
   @IsString()
   @IsNotEmpty()
@@ -21,14 +31,17 @@ export class Code {
   @IsNotEmpty()
   function_name: string;
 
-  @IsString()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CodeText)
   @IsNotEmpty()
-  code_text: string;
+  code_text: CodeText[];
 
-  @ValidateNested()
+  @IsArray()
+  @ValidateNested({ each: true })
   @Type(() => FunctionInputDefinition)
   @IsNotEmpty()
-  inputs: FunctionInputDefinition;
+  inputs: FunctionInputDefinition[];
 }
 
 class FunctionInputValue {
@@ -46,10 +59,15 @@ export class Test {
   @IsNotEmpty()
   weight: number;
 
+  @IsArray()
   @ValidateNested()
   @Type(() => FunctionInputValue)
   @IsNotEmpty()
-  inputs: FunctionInputValue;
+  inputs: FunctionInputValue[];
+
+  @IsString()
+  @IsNotEmpty()
+  outputs: string;
 }
 
 export class Submission {
