@@ -6,7 +6,6 @@ import { ChallengeModule } from './challenge/challenge.module';
 import { AppController } from './app.controller';
 import { ChallengeController } from './challenge/challenge.controller';
 import { AppService } from './app.service';
-// other imports
 
 @Module({
   imports: [
@@ -19,6 +18,7 @@ import { AppService } from './app.service';
       inject: [ConfigService],
     }),
     JwtModule.registerAsync({
+      global: true,
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),

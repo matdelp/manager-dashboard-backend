@@ -24,10 +24,12 @@ export class RolesGuard implements CanActivate {
     }
 
     const token = authHeader.split(' ')[1];
+    console.log(token);
 
     try {
       const decryptedToken =
         await this.jwtService.verifyAsync<JwtPayload>(token);
+      console.log(decryptedToken);
 
       if (
         !decryptedToken ||

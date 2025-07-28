@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ChallengeController } from './challenge.controller';
-import { ChallengeService } from './challenge.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Manager, ManagerSchema } from 'src/schemas/manager.schema';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Challenge, ChallengeSchema } from 'src/schemas/challenge.schema';
 import { Code, CodeSchema } from 'src/schemas/code.schema';
 import { CodeText, CodeTextSchema } from 'src/schemas/codeText.schema';
@@ -14,13 +12,13 @@ import {
   FunctionInputValue,
   FunctionInputValueSchema,
 } from 'src/schemas/functionInputValue.schema';
+import { Manager, ManagerSchema } from 'src/schemas/manager.schema';
 import { Test, TestSchema } from 'src/schemas/test.schema';
-import { JwtModule } from '@nestjs/jwt';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { ChallengeController } from './challenge.controller';
+import { ChallengeService } from './challenge.service';
 
 @Module({
   imports: [
-    JwtModule,
     MongooseModule.forFeature([
       { name: Manager.name, schema: ManagerSchema },
       { name: Challenge.name, schema: ChallengeSchema },
