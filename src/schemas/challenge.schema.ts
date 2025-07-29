@@ -25,6 +25,12 @@ export class Challenge {
 
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Submission' })
   submission: Types.ObjectId[];
+
+  @Prop()
+  createdAt?: Date;
+
+  @Prop()
+  updatedAt?: Date;
 }
 
 export const ChallengeSchema = SchemaFactory.createForClass(Challenge);

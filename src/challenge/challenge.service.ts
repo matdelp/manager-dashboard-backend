@@ -55,7 +55,13 @@ export class ChallengeService {
   }
 
   async findOne(id: string): Promise<Challenge> {
-    const challenge = await this.challengeModel.findById(id).exec();
+    const challenge = await this.challengeModel
+      .findById(id)
+      .populate([
+        { path: 'code', populate: [{ path: 'code_text' }, { path: 'inputs' }] },
+        { path: 'test', populate: { path: 'inputs' } },
+      ])
+      .exec();
     if (!challenge) throw new NotFoundException('Challenge not found');
     return challenge;
   }
