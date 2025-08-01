@@ -1,23 +1,31 @@
-# Use small Node.js image
-FROM node:lts-alpine3.19
+# ---------- DEVELOPMENT STAGE ----------
+FROM node:lts-alpine3.19 AS development
 
-# Create and set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy only package.json first for dependency install
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy rest of the application
 COPY . .
 
-# Build TypeScript (if you compile for production)
 RUN npm run build
 
-# Expose app port (change if needed)
-EXPOSE 5000
 
-# Run the app in production mode by default
-CMD ["npm", "run", "start"]
+# ---------- PRODUCTION STAGE ----------
+FROM node:lts-alpine3.19 AS production
+
+WORKDIR /app
+
+# Copy only production dependencies
+COPY package*.json ./
+RUN npm install --only=production
+
+# Copy compiled code from development stage
+COPY --from=development /app/dist ./dist
+
+# Optionally copy other required files like .env if needed
+# COPY .env .env
+
+# Run the application
+CMD ["node", "dist/main"]
