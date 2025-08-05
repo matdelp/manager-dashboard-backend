@@ -57,6 +57,8 @@ Custom Decorators
 Author
 
 Mathilde Delpeuch
+
 Full-stack Web Development Student – Code Labs Academy
+
 GitHub – @matdelp
 
